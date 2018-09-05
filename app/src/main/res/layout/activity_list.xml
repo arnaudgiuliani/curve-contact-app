@@ -9,16 +9,17 @@
 
     <TextView
         android:id="@+id/list_title"
-        style="@style/TextHeading"
+        style="@style/TextHeadline"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/primary_light"
+        android:background="@color/primary"
         android:gravity="center"
         android:padding="16dp"
         android:text="@string/list_title"
-        android:textColor="@color/icons_black" />
+        android:textColor="@color/t_white" />
 
     <android.support.v7.widget.RecyclerView
+        android:layout_marginTop="8dp"
         android:id="@+id/list_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

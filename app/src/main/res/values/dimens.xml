@@ -14,5 +14,7 @@
     <dimen name="text_display1">34sp</dimen>
     <dimen name="cell_height">72dp</dimen>
 
-    <dimen name="item_height">72dp</dimen>
+    <dimen name="item_height">92dp</dimen>
+    <dimen name="detail_icon_size">48dp</dimen>
+    <dimen name="detail_text_size">28sp</dimen>
 </resources>

@@ -8,11 +8,12 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.imaginecurve.curvecontactsapp.R
+import com.imaginecurve.curvecontactsapp.util.android.getColor
 
 class ItemListAdapter(
-    val context: Context,
     var list: List<ItemUIModel>,
-    private val onDetailSelected: (ItemUIModel) -> Unit
+    val context: Context,
+    private val onDetailSelected: (ItemUIModel, Int) -> Unit
 ) : RecyclerView.Adapter<ItemListAdapter.ItemUIHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemUIHolder {
@@ -21,7 +22,7 @@ class ItemListAdapter(
     }
 
     override fun onBindViewHolder(holder: ItemUIHolder, position: Int) {
-        holder.display(list[position], context, onDetailSelected)
+        holder.display(list[position], position)
     }
 
     override fun getItemCount() = list.size
@@ -33,19 +34,14 @@ class ItemListAdapter(
 
         fun display(
             item: ItemUIModel,
-            context: Context,
-            onClick: (ItemUIModel) -> Unit
+            index: Int
         ) {
-            layout.setOnClickListener { onClick(item) }
-            //TODO color background
             name.text = item.name
 
-//            weatherItemLayout.setOnClickListener { onClick(dailyForecastModel) }
-//            weatherItemDay.text = dailyForecastModel.day
-//            weatherItemIcon.text = dailyForecastModel.icon
-//            val color = context.getColorFromCode(dailyForecastModel)
-//            weatherItemDay.setTextColor(color)
-//            weatherItemIcon.setTextColor(color)
+            // Color background
+            val color = getColor(item.getColorIndex(index), context)
+            layout.setBackgroundColor(color)
+            layout.setOnClickListener { onDetailSelected(item, color) }
         }
 
     }

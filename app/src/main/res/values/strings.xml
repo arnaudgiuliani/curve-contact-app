@@ -4,4 +4,6 @@
     <string name="currently_loading">We are currently loading your contacts...</string>
     <string name="currently_failed">Contact loading failed :(</string>
     <string name="list_title">Your Contacts</string>
+    <string name="list_failed">Getting contact list failed!</string>
+    <string name="detail_failed">Loading detail failed!</string>
 </resources>

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import android.widget.Toast
 import com.imaginecurve.curvecontactsapp.APP_TAG
 import com.imaginecurve.curvecontactsapp.R
 import com.imaginecurve.curvecontactsapp.util.mvvm.ErrorState
@@ -34,15 +35,16 @@ class ListActivity : AppCompatActivity() {
     }
 
     private fun prepareUIList() {
-
         list_recycler.layoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        list_recycler.adapter = ItemListAdapter(this, emptyList(), ::onItemSelected)
+        list_recycler.adapter = ItemListAdapter(emptyList(), this, ::onItemSelected)
     }
 
-    private fun onItemSelected(item: ItemUIModel) {
+    private fun onItemSelected(item: ItemUIModel, color : Int) {
+        println("color -> $color / $item ")
         startActivity<DetailActivity>(
-            ARG_DETAIL_ITEM to item.id
+            ARG_ITEM_ID to item.id,
+            ARG_COLOR to color
         )
     }
 
@@ -54,11 +56,12 @@ class ListActivity : AppCompatActivity() {
     }
 
     private fun showError(error: Throwable) {
-        //TODO Display error
         Log.e(APP_TAG, "ListViewModel loading error : $error")
+        Toast.makeText(this,getString(R.string.list_failed),Toast.LENGTH_SHORT).show()
     }
 
     companion object {
-        const val ARG_DETAIL_ITEM = "DETAIL_ITEM"
+        const val ARG_ITEM_ID = "ITEM_ID"
+        const val ARG_COLOR = "COLOR"
     }
 }

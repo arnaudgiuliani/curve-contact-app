@@ -11,7 +11,8 @@ class MockedContactDataSource : ContactDataSource {
         Contact("User3","0123456789","user3@email.com"),
         Contact("User4","0123456789","user4@email.com"),
         Contact("User5","0123456789","user5@email.com"),
-        Contact("User6","0123456789","user6@email.com")
+        Contact("User6","0123456789","user6@email.com"),
+        Contact("User7","0123456789","user7@email.com")
     )
 
     override fun retrieveAllContacts(): List<Contact>  = _contacts
