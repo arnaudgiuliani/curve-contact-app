@@ -5,8 +5,15 @@
     android:layout_height="match_parent"
     android:background="@color/primary"
     android:gravity="center"
-    android:padding="16dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/detail_image"
+        android:layout_width="@dimen/detail_image_size"
+        android:layout_height="@dimen/detail_image_size"
+        android:layout_margin="16dp"
+        android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,8 +23,8 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="@dimen/detail_icon_size"
-            android:layout_height="@dimen/detail_icon_size"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
             android:src="@drawable/ic_perm_contact_calendar_black_24dp" />
 
         <TextView
@@ -41,37 +48,12 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="@dimen/detail_icon_size"
-            android:layout_height="@dimen/detail_icon_size"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
             android:src="@android:drawable/stat_sys_phone_call" />
 
         <TextView
             android:id="@+id/detail_phone_label"
-            style="@style/Text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:gravity="center"
-            android:text="Name"
-            android:textColor="@color/t_white"
-            android:textSize="@dimen/detail_text_size" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="@dimen/detail_icon_size"
-            android:layout_height="@dimen/detail_icon_size"
-            android:src="@android:drawable/ic_dialog_email" />
-
-        <TextView
-            android:id="@+id/detail_email_label"
             style="@style/Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

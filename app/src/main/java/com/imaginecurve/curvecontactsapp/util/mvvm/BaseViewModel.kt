@@ -19,7 +19,7 @@ abstract class BaseViewModel(private val schedulerProvider: SchedulerProvider) :
         jobs += kotlinx.coroutines.experimental.launch(schedulerProvider.ui(), block = code)
     }
 
-    override fun onCleared() {
+    public override fun onCleared() {
         super.onCleared()
         jobs.forEach { it.cancel() }
     }

@@ -18,7 +18,10 @@ class ListViewModel(
         launch {
             _states.value = LoadingState
             try {
-                val items = contactRepository.getContactList().await().map { ItemUIModel.from(it) }
+                val items = contactRepository.getContactList().await()
+                    .map {
+                        ItemUIModel.from(it)
+                    }
                 _states.value = LoadedState(items)
             } catch (e: Throwable) {
                 _states.value = ErrorState(e)

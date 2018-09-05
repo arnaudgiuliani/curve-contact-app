@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import com.imaginecurve.curvecontactsapp.APP_TAG
 import com.imaginecurve.curvecontactsapp.R
@@ -39,12 +40,15 @@ class DetailActivity : AppCompatActivity() {
 
     private fun showError(error: Throwable) {
         Log.e(APP_TAG, "DetailActivity loading error : $error")
-        Toast.makeText(this,getString(R.string.detail_failed), Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, getString(R.string.detail_failed), Toast.LENGTH_SHORT).show()
     }
 
     private fun showDetail(detail: DetailUIModel) {
         detail_name_label.text = detail.name
-        detail_email_label.text = detail.email
         detail_phone_label.text = detail.phone
+        detail.photo?.let {
+            detail_image.visibility = View.VISIBLE
+            detail_image.setImageBitmap(it)
+        }
     }
 }

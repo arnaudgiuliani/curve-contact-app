@@ -5,10 +5,12 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.imaginecurve.curvecontactsapp.R
 import com.imaginecurve.curvecontactsapp.util.android.getColor
+
 
 class ItemListAdapter(
     var list: List<ItemUIModel>,
@@ -31,6 +33,8 @@ class ItemListAdapter(
 
         private val layout = item.findViewById<LinearLayout>(R.id.item)
         private val name = item.findViewById<TextView>(R.id.item_name)
+        private val icon = item.findViewById<ImageView>(R.id.item_icon)
+        private val image = item.findViewById<ImageView>(R.id.item_image)
 
         fun display(
             item: ItemUIModel,
@@ -42,6 +46,15 @@ class ItemListAdapter(
             val color = getColor(item.getColorIndex(index), context)
             layout.setBackgroundColor(color)
             layout.setOnClickListener { onDetailSelected(item, color) }
+
+            if (item.photoBitmap != null ) {
+                image.setImageBitmap(item.photoBitmap )
+                image.visibility = View.VISIBLE
+                icon.visibility = View.GONE
+            } else {
+                image.visibility = View.GONE
+                icon.visibility = View.VISIBLE
+            }
         }
 
     }

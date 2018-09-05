@@ -1,7 +1,11 @@
 package com.imaginecurve.curvecontactsapp.view.splash
 
+import android.Manifest
 import android.arch.lifecycle.Observer
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
@@ -22,8 +26,6 @@ class SplashActivity : AppCompatActivity() {
 
     val viewModel: SplashViewModel by viewModel()
 
-    //TODO handle permission to read contacts
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
@@ -37,7 +39,45 @@ class SplashActivity : AppCompatActivity() {
                 }
             }
         })
-        viewModel.loadAllContacts()
+
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_CONTACTS)
+            != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.READ_CONTACTS)) {
+                // Should Show an explanation to the user *asynchronously*
+            } else {
+                // No explanation needed, we can request the permission.
+                ActivityCompat.requestPermissions(this,
+                    arrayOf(Manifest.permission.READ_CONTACTS),
+                    readContactPermission)
+            }
+        } else {
+            // Permission has already been granted
+            viewModel.loadAllContacts()
+        }
+    }
+
+    var readContactPermission : Int = 0
+
+    override fun onRequestPermissionsResult(requestCode: Int,
+                                            permissions: Array<String>, grantResults: IntArray) {
+        when (requestCode) {
+            readContactPermission -> {
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    // permission was granted
+                    viewModel.loadAllContacts()
+                } else {
+                    // permission denied
+                }
+                return
+            }
+
+            else -> {
+                // Ignore all other requests.
+            }
+        }
     }
 
     private fun showSucceed() {

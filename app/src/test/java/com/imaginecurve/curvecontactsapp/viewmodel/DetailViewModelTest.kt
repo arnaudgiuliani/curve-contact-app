@@ -13,6 +13,7 @@ import com.imaginecurve.curvecontactsapp.util.mvvm.State
 import com.imaginecurve.curvecontactsapp.view.detail.DetailUIModel
 import com.imaginecurve.curvecontactsapp.view.detail.DetailViewModel
 import kotlinx.coroutines.experimental.runBlocking
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
@@ -41,6 +42,11 @@ class DetailViewModelTest : AutoCloseKoinTest() {
 
         // Mock View
         declareMock<Observer<State>>()
+    }
+
+    @After
+    fun after(){
+        viewModel.onCleared()
     }
 
     @Test

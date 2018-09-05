@@ -8,11 +8,19 @@
 
     <ImageView
         android:id="@+id/item_icon"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/icon_size"
         android:layout_gravity="center"
         android:layout_margin="8dp"
         android:src="@drawable/ic_perm_contact_calendar_black_24dp" />
+
+    <ImageView
+        android:id="@+id/item_image"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:layout_margin="8dp"
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/icon_size" />
 
     <TextView
         android:id="@+id/item_name"

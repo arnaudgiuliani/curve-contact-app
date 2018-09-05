@@ -13,6 +13,7 @@ import com.imaginecurve.curvecontactsapp.util.mvvm.SuccessEvent
 import com.imaginecurve.curvecontactsapp.view.splash.SplashViewModel
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.runBlocking
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
@@ -41,6 +42,11 @@ class SplashViewModelTest {
 
         viewModel = SplashViewModel(repository, TestSchedulerProvider())
         viewModel.events.observeForever(view)
+    }
+
+    @After
+    fun after(){
+        viewModel.onCleared()
     }
 
     @Test

@@ -1,6 +1,7 @@
 package com.imaginecurve.curvecontactsapp.di
 
 import com.imaginecurve.curvecontactsapp.data.ContactDataSource
+import com.imaginecurve.curvecontactsapp.data.android.AndroidContactDataSource
 import com.imaginecurve.curvecontactsapp.data.mock.MockedContactDataSource
 import com.imaginecurve.curvecontactsapp.domain.ContactRepository
 import com.imaginecurve.curvecontactsapp.domain.ContactRepositoryImpl
@@ -24,4 +25,8 @@ val appModule = module {
 
 val mockedDataModule = module {
     single<ContactDataSource> { MockedContactDataSource() }
+}
+
+val dataModule = module {
+    single<ContactDataSource> { AndroidContactDataSource(get()) }
 }
