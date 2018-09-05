@@ -1,4 +1,13 @@
 ext {
+    // Android
+    androidGradlePlugin = "3.1.4"
+    minSdkVersion = 21
+    targetSdkVersion = 27
+    compileSdkVersion = 27
+    buildToolsVersion = '27.0.3'
+
+    support_lib_version = '27.1.1'
+
     // Kotlin
     kotlin_version = '1.2.61'
     coroutines_version = "0.23.3"

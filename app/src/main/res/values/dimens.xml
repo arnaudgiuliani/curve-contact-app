@@ -13,4 +13,6 @@
     <dimen name="text_headline">24sp</dimen>
     <dimen name="text_display1">34sp</dimen>
     <dimen name="cell_height">72dp</dimen>
+
+    <dimen name="item_height">72dp</dimen>
 </resources>

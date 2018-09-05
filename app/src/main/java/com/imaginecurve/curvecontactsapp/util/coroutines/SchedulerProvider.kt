@@ -1,4 +1,4 @@
-package com.imaginecurve.curvecontactsapp.util.mvvm
+package com.imaginecurve.curvecontactsapp.util.coroutines
 
 import kotlinx.coroutines.experimental.CoroutineDispatcher
 

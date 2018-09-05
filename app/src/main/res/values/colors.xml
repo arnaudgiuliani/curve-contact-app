@@ -9,7 +9,7 @@
     <color name="primary_text">#212121</color>
     <color name="secondary_text">#777777</color>
     <color name="icons_black">#212121</color>
-    <color name="icons">accent_dark</color>
+    <color name="icons">@color/accent_dark</color>
     <color name="divider">#BDBDBD</color>
 
     <color name="delete_row_background">#fa315b</color>
