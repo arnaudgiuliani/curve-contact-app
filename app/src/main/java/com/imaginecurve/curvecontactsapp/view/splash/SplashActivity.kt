@@ -9,6 +9,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
+import android.view.animation.AnimationUtils
 import com.imaginecurve.curvecontactsapp.APP_TAG
 import com.imaginecurve.curvecontactsapp.R
 import com.imaginecurve.curvecontactsapp.util.mvvm.FailedEvent
@@ -40,18 +41,27 @@ class SplashActivity : AppCompatActivity() {
             }
         })
 
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.READ_CONTACTS)
-            != PackageManager.PERMISSION_GRANTED) {
-
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.READ_CONTACTS)) {
+        // Ugly block to check permission
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_CONTACTS
+            )
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(
+                    this,
+                    Manifest.permission.READ_CONTACTS
+                )
+            ) {
                 // Should Show an explanation to the user *asynchronously*
+                splash_text.text = getString(R.string.permission_request)
             } else {
                 // No explanation needed, we can request the permission.
-                ActivityCompat.requestPermissions(this,
+                ActivityCompat.requestPermissions(
+                    this,
                     arrayOf(Manifest.permission.READ_CONTACTS),
-                    readContactPermission)
+                    readContactPermission
+                )
             }
         } else {
             // Permission has already been granted
@@ -59,10 +69,13 @@ class SplashActivity : AppCompatActivity() {
         }
     }
 
-    var readContactPermission : Int = 0
+    var readContactPermission: Int = 0
 
-    override fun onRequestPermissionsResult(requestCode: Int,
-                                            permissions: Array<String>, grantResults: IntArray) {
+    // Intercept permission result
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>, grantResults: IntArray
+    ) {
         when (requestCode) {
             readContactPermission -> {
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
@@ -81,7 +94,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun showSucceed() {
-        //TODO stop animate
+        splash_text.animation.cancel()
         splash_text.visibility = View.INVISIBLE
         Log.i(APP_TAG, "loading succeed!")
 
@@ -89,13 +102,16 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun showIsLoading() {
-        //TODO animate
+        val animation =
+            AnimationUtils.loadAnimation(applicationContext, R.anim.infinite_blinking_animation)
+        splash_text.startAnimation(animation)
+
         splash_text.visibility = View.VISIBLE
         splash_text.text = getString(R.string.currently_loading)
     }
 
     private fun showError(error: Throwable) {
-        //TODO stop animate
+        splash_text.animation.cancel()
         splash_text.visibility = View.VISIBLE
         splash_text.text = getString(R.string.currently_failed)
         Log.e(APP_TAG, "loading failed: $error")

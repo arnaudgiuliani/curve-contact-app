@@ -12,8 +12,12 @@ class MainApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
+        // Mock version
+//        startKoin(this, listOf(appModule, mockedDataModule))
+
         // Star Koin for DI
-        startKoin(this, listOf(appModule, dataModule))
+        startKoin(this, listOf(appModule, mockedDataModule))
+
     }
 }
 
