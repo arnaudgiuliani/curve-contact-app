@@ -2,67 +2,66 @@ package com.imaginecurve.curvecontactsapp.viewmodel
 
 import android.arch.core.executor.testing.InstantTaskExecutorRule
 import android.arch.lifecycle.Observer
-import com.imaginecurve.curvecontactsapp.di.appModule
-import com.imaginecurve.curvecontactsapp.di.mockedDataModule
-import com.imaginecurve.curvecontactsapp.di.testSchedulerModule
+import com.imaginecurve.curvecontactsapp.data.mock.MockedContactDataSource
 import com.imaginecurve.curvecontactsapp.domain.ContactRepository
+import com.imaginecurve.curvecontactsapp.util.coroutines.TestSchedulerProvider
 import com.imaginecurve.curvecontactsapp.util.mockito.MockitoHelper.argumentCaptor
 import com.imaginecurve.curvecontactsapp.util.mvvm.ErrorState
 import com.imaginecurve.curvecontactsapp.util.mvvm.LoadingState
 import com.imaginecurve.curvecontactsapp.util.mvvm.State
 import com.imaginecurve.curvecontactsapp.view.list.ItemUIModel
 import com.imaginecurve.curvecontactsapp.view.list.ListViewModel
+import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.koin.standalone.StandAloneContext.startKoin
-import org.koin.standalone.inject
 import org.koin.test.AutoCloseKoinTest
-import org.koin.test.declareMock
 import org.mockito.BDDMockito.given
-import org.mockito.Mockito
+import org.mockito.Mock
 import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
+import org.mockito.MockitoAnnotations
 
 class ListViewModelTest : AutoCloseKoinTest() {
 
-    val viewModel: ListViewModel by inject()
-    val view: Observer<State> by inject()
-    val repository: ContactRepository by inject()
+    lateinit var viewModel: ListViewModel
+    @Mock
+    lateinit var view: Observer<State>
+    @Mock
+    lateinit var repository: ContactRepository
 
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
     @Before
     fun before() {
-        startKoin(listOf(appModule, mockedDataModule, testSchedulerModule))
+        MockitoAnnotations.initMocks(this)
 
-        // Mock View
-        declareMock<Observer<State>>()
+        viewModel = ListViewModel(repository, TestSchedulerProvider())
+        viewModel.states.observeForever(view)
     }
 
     @After
-    fun after(){
+    fun after() {
         viewModel.onCleared()
     }
 
     @Test
     fun `ListViewModel got items`() = runBlocking {
-        // set view - VM
-        viewModel.states.observeForever(view)
 
+        val contacts = MockedContactDataSource().retrieveAllContacts()
+        given(repository.getContactList()).will { async { contacts } }
         // reuse mocked data
-        val contacts = repository.getContactList().await()
 
         viewModel.getContacts()
 
         // setup ArgumentCaptor
         val arg = argumentCaptor<State>()
         // Here we expect 2 calls on view.onChanged
-        verify(view, Mockito.times(2)).onChanged(arg.capture())
+        verify(view, times(2)).onChanged(arg.capture())
 
         val values = arg.allValues
         // Test obtained values in order
@@ -76,10 +75,6 @@ class ListViewModelTest : AutoCloseKoinTest() {
 
     @Test
     fun `ListViewModel failed to got items`() = runBlocking {
-        // mock it to throw error
-        declareMock<ContactRepository>()
-        // set view - VM
-        viewModel.states.observeForever(view)
 
         val error = Throwable("Got error")
         given(repository.getContactList()).will { throw error }
