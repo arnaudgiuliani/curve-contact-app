@@ -51,7 +51,6 @@ class ListViewModelTest : AutoCloseKoinTest() {
 
     @Test
     fun `ListViewModel got items`() = runBlocking {
-
         val contacts = MockedContactDataSource().retrieveAllContacts()
         given(repository.getContactList()).will { async { contacts } }
         // reuse mocked data

@@ -1,6 +1,7 @@
 package com.imaginecurve.curvecontactsapp.view.list
 
 import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MutableLiveData
 import com.imaginecurve.curvecontactsapp.domain.ContactRepository
 import com.imaginecurve.curvecontactsapp.util.coroutines.SchedulerProvider
 import com.imaginecurve.curvecontactsapp.util.mvvm.*
@@ -10,7 +11,7 @@ class ListViewModel(
     schedulerProvider: SchedulerProvider
 ) : BaseViewModel(schedulerProvider) {
 
-    private val _states = SingleLiveEvent<State>()
+    private val _states = MutableLiveData<State>()
     val states: LiveData<State>
         get() = _states
 
