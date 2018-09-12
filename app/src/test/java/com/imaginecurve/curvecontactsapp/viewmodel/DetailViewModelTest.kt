@@ -57,7 +57,7 @@ class DetailViewModelTest {
         // reuse mocked data
         val contacts = MockedContactDataSource().retrieveAllContacts()
         val contact = contacts.first()
-        given(repository.getContactById(any())).will { async { contact } }
+        given(repository.getContactById(any())).willReturn(async { contact })
 
         viewModel.getDetail(contact.id)
 
